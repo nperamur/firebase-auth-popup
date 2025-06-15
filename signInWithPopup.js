@@ -1,4 +1,3 @@
-
 const firebaseConfig = {
   apiKey: "AIzaSyB_Q4URffEbtM_Amrr4uVhqIDZeJeHTgNs",
   authDomain: "my-page-summarizer.firebaseapp.com",
@@ -21,15 +20,10 @@ function sendResponse(result) {
   globalThis.parent.self.postMessage(JSON.stringify(result), PARENT_FRAME);
 }
 
-globalThis.addEventListener('message', function({data}) {
+globalThis.addEventListener('message', function({ data }) {
   if (data.initAuth) {
-    if (auth.currentUser) {
-      sendResponse(auth.currentUser.toJSON());
-    } else {
-      auth.signInWithPopup(PROVIDER)
-        .then(sendResponse)
-        .catch(sendResponse);
-    }
+    auth.signInWithPopup(PROVIDER)
+      .then(sendResponse)
+      .catch(sendResponse);
   }
 });
-
