@@ -23,9 +23,13 @@ function sendResponse(result) {
 
 globalThis.addEventListener('message', function({data}) {
   if (data.initAuth) {
-    auth.signInWithPopup(PROVIDER)
-      .then(sendResponse)
-      .catch(sendResponse)
+    if (auth.currentUser) {
+      sendResponse(auth.currentUser.toJSON());
+    } else {
+      auth.signInWithPopup(PROVIDER)
+        .then(sendResponse)
+        .catch(sendResponse);
+    }
   }
 });
 
