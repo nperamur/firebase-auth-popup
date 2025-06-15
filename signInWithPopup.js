@@ -14,6 +14,8 @@ const auth = firebase.auth();
 
 const PARENT_FRAME = document.location.ancestorOrigins[0];
 const PROVIDER = new firebase.auth.GoogleAuthProvider();
+PROVIDER.addScope('https://www.googleapis.com/auth/cloud-platform');
+PROVIDER.addScope('https://www.googleapis.com/auth/generative-language.retriever');
 
 function sendResponse(result) {
   globalThis.parent.self.postMessage(JSON.stringify(result), PARENT_FRAME);
