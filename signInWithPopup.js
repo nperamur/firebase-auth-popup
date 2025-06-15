@@ -21,18 +21,11 @@ function sendResponse(result) {
   globalThis.parent.self.postMessage(JSON.stringify(result), PARENT_FRAME);
 }
 
-globalThis.addEventListener('message', function({ data }) {
+globalThis.addEventListener('message', function({data}) {
   if (data.initAuth) {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        sendResponse(user.toJSON());
-      } else {
-        auth.signInWithPopup(PROVIDER)
-          .then(sendResponse)
-          .catch(sendResponse);
-      }
-    });
-    return true; 
+    signInWithPopup(auth, PROVIDER)
+      .then(sendResponse)
+      .catch(sendResponse)
   }
 });
 
