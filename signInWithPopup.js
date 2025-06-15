@@ -23,7 +23,7 @@ function sendResponse(result) {
 
 globalThis.addEventListener('message', function({data}) {
   if (data.initAuth) {
-    signInWithPopup(auth, PROVIDER)
+    auth.signInWithPopup(auth, PROVIDER)
       .then(sendResponse)
       .catch(sendResponse)
   }
