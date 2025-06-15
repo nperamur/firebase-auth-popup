@@ -23,14 +23,16 @@ function sendResponse(result) {
 
 globalThis.addEventListener('message', function({ data }) {
   if (data.initAuth) {
-    if (auth.currentUser) {
-      // User is already signed in, send user data immediately
-      sendResponse(auth.currentUser.toJSON());
-    } else {
-      // No user signed in, trigger popup
-      auth.signInWithPopup(PROVIDER)
-        .then(sendResponse)
-        .catch(sendResponse);
-    }
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        sendResponse(user.toJSON());
+      } else {
+        auth.signInWithPopup(PROVIDER)
+          .then(sendResponse)
+          .catch(sendResponse);
+      }
+    });
+    return true; 
   }
 });
+
